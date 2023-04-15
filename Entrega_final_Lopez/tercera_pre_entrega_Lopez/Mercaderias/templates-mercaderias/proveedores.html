@@ -1,0 +1,26 @@
+
+{% extends 'padre.html' %}
+
+{% load static %}
+
+{% block contenidoQueCambia %}
+    
+    <div class="col-xl-6">
+      <div class="text-black">
+          <h1 class="mb-15">GESTION DE PROVEEDORES</h1>
+         
+      </div>
+    </div>
+   
+  <!-- Navigation-->
+  <nav class="navbar navbar-light bg-light static-top">
+    <div class="container">
+        <div class="mi-button">
+            <a class="navbar-brand" href="{% url 'busquedaProveedor' %}">Consulta</a>
+        </div>
+        <a class="navbar-brand" href="{% url 'altaProveedor' %}">Alta de Proveedor</a>
+        
+    </div>
+  </nav>
+
+{% endblock contenidoQueCambia %}

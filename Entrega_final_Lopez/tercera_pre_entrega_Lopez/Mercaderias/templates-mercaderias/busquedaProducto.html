@@ -1,0 +1,38 @@
+{% extends 'padre.html' %}
+
+{% load static %}
+
+{% block contenidoQueCambia %}
+    
+    <div class="col-xl-6">
+      <div class="text-black">
+          <h1 class="mb-15">GESTION DE PRODUCTOS</h1>
+         
+      </div>
+    </div>
+   
+  <!-- Navigation-->
+  <nav class="navbar navbar-light bg-light static-top">
+    <div class="container">
+        <div class="mi-button">
+            <a class="navbar-brand" href="{% url 'busquedaProducto' %}">Consulta</a>
+        </div>
+        
+        
+    </div>
+  </nav>
+
+{% endblock contenidoQueCambia %}
+
+{% block contenidoQueCambia2 %}
+  
+  <form action="{% url 'buscar' %}" method="GET">{% csrf_token %}
+
+    <p>Código: <input type="number" name="codigo" id="codigo"></p>
+
+    <button type="submit"> Buscar </button>
+
+  </form>
+
+{% endblock contenidoQueCambia2 %}
+  

@@ -6,22 +6,22 @@
     
     <div class="col-xl-6">
       <div class="text-black">
-          <h1 class="mb-15">GESTION DE COMPRAS</h1>
-          <h3> Ingrese una compra </h3>
+          <h1 class="mb-15">GESTION DE STOCK</h1>
       </div>
     </div>
    
-  
 {% endblock contenidoQueCambia %}
 
 {% block contenidoQueCambia2 %}
   
-  <form action="{% url 'altaCompra' %}" method="POST">{% csrf_token %}
+  <form method="POST">{% csrf_token %}
 
-    {{altaFormulario.as_table}}
+    <p>Está seguro que desea eliminar el registro?</p>
 
-    <button type="submit"> Enviar </button>
-
+    <button type="submit"> Confirmar </button>
+    <button><a href="{% url 'inicio' %}">Cancelar</a></button>
+    
   </form>
+  
 
 {% endblock contenidoQueCambia2 %}

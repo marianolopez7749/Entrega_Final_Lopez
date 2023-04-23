@@ -1,4 +1,5 @@
 from django.db import models
+from django.contrib.auth.models import User
 
 # Create your models here.
 
@@ -18,6 +19,8 @@ class Productos(models.Model):
     descripcion=models.CharField(max_length=40)
     codigo=models.IntegerField()
     Cuit=models.IntegerField()
+    
+   
 
     def __str__(self):
        return f'Nombre: {self.nombre} - Descripcion: {self.descripcion} - Código: {self.codigo} - Cuit: {self.Cuit}' 
@@ -39,9 +42,10 @@ class Stock(models.Model):
     cantidad=models.IntegerField()
 
     def __str__(self):
-       return f'{self.codigo} - {self.cantidad}'
-
+       return f'Código: {self.codigo} - Cantidad: {self.cantidad}'
     
 
-    
+class Avatar(models.Model):
 
+  user = models.ForeignKey(User, on_delete=models.CASCADE)
+  imagen = models.ImageField(upload_to='avatares', null=True, blank=True)

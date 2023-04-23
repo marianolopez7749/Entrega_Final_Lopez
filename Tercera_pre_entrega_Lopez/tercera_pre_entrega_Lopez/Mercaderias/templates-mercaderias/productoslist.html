@@ -1,0 +1,38 @@
+{% extends 'padre.html' %}
+
+{% load static %}
+
+{% block contenidoQueCambia %}
+    
+    <div class="col-xl-6">
+      <div class="text-black">
+          <h1 class="mb-15">GESTION DE PRODUCTOS</h1>
+      </div>
+    </div>
+   
+{% endblock contenidoQueCambia %}
+
+
+{% block contenidoQueCambia2 %}
+  
+  <p>Lista de Productos</p>
+
+  <ul>
+    {% for producto in productos %}
+      <li>
+        <a href="{% url 'consultaproductos' producto.id %}">
+           {{ producto.nombre }}
+        </a>   
+      </li>
+      <div style="display: flex; column-gap: 5px;">
+        <button>
+            <a href="{% url 'eliminaproductos' producto.id %}">Eliminar</a>
+        </button>
+        <button>
+          <a href="{% url 'modificaproductos' producto.id %}">Editar</a>
+        </button>
+      </div>
+    {% endfor %}
+ </ul>
+
+{% endblock contenidoQueCambia2 %}

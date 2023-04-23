@@ -1,0 +1,37 @@
+{% extends 'padre.html' %}
+
+{% load static %}
+
+{% block contenidoQueCambia %}
+    
+    <div class="col-xl-6">
+      <div class="text-black">
+          <h1 class="mb-15">GESTION DE PROVEEDORES</h1>
+      </div>
+    </div>
+   
+{% endblock contenidoQueCambia %}
+
+{% block contenidoQueCambia2 %}
+  
+  <p>Lista de Proveedores</p>
+
+  <ul>
+    {% for proveedor in proveedores %}
+      <li>
+        <a href="{% url 'consultaproveedor' proveedor.id %}">
+           {{ proveedor.razon_social }}
+        </a>   
+      </li>
+      <div style="display: flex; column-gap: 5px;">
+        <button>
+            <a href="{% url 'eliminaproveedor' proveedor.id %}">Eliminar</a>
+        </button>
+        <button>
+          <a href="{% url 'modificaproveedor' proveedor.id %}">Editar</a>
+        </button>
+      </div>
+    {% endfor %}
+ </ul>
+
+{% endblock contenidoQueCambia2 %}

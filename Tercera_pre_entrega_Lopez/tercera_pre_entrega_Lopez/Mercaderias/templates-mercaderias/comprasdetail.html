@@ -1,0 +1,11 @@
+{% extends 'padre.html' %}
+
+{% load static %}
+
+{% block contenidoQueCambia %}
+  
+  <h1>Datos de la compra:</h1>
+  <p>Orden de compra: {{compras.orden_compra}}, Factura: {{compras.factura_compra}}</p>
+  <p>Cuit: {{compras.Cuit}}, Código de producto: {{compras.codigo}}, Cantidad: {{compras.cantidad}} </p>
+
+{% endblock contenidoQueCambia %}

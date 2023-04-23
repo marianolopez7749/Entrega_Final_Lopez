@@ -1,0 +1,37 @@
+{% extends 'padre.html' %}
+
+{% load static %}
+
+{% block contenidoQueCambia %}
+    
+    <div class="col-xl-6">
+      <div class="text-black">
+          <h1 class="mb-15">GESTION DE STOCK</h1>
+      </div>
+    </div>
+   
+{% endblock contenidoQueCambia %}
+
+{% block contenidoQueCambia2 %}
+  
+  <p>Lista de inventario</p>
+
+  <ul>
+    {% for stock in stocks %}
+      <li>
+        <a href="{% url 'consultastock' stock.id %}">
+           {{ stock.codigo }}
+        </a>   
+      </li>
+      <div style="display: flex; column-gap: 5px;">
+        <button>
+            <a href="{% url 'eliminastock' stock.id %}">Eliminar</a>
+        </button>
+        <button>
+          <a href="{% url 'modificastock' stock.id %}">Editar</a>
+        </button>
+      </div>
+    {% endfor %}
+ </ul>
+
+{% endblock contenidoQueCambia2 %}

@@ -3,3 +3,16 @@
 
 {% load static %}
 
+{% block contenidoQueCambia %}
+  
+  {{mensaje}}
+
+  {% for fields_error in formulario.errors.values  %}
+    
+    {% for error in fields_error %}
+      <li>{{error}}</li>
+    {% endfor %}
+      
+  {% endfor %}
+
+{% endblock contenidoQueCambia %}

@@ -15,22 +15,13 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+from django.conf import settings
+from django.conf.urls.static import static
 from Mercaderias.views import *
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', inicio, name="inicio"),
-    path('productos/', productos, name="productos"),
-    path('proveedores/', proveedores, name="proveedores"),
-    path('compras/', compras, name="compras"),
-    path('stock/', stock, name="stock"),
-    path('altaProveedor/', altaProveedor, name="altaProveedor"),
-    path('altaProducto/', altaProducto, name="altaProducto"),
-    path('altaCompra/', altaCompra, name="altaCompra"),
-    path('busquedaProducto/', busquedaProducto, name="busquedaProducto"),
-    path('buscar/', buscar, name="buscar"),
-    path('busquedaProveedor/', busquedaProveedor, name="busquedaProveedor"),
-    path('buscarProveedor/', buscarProveedor, name="buscarProveedor"),
-    path('busquedaCompra/', busquedaCompra, name="busquedaCompra"),
-    path('buscarCompra/', buscarCompra, name="buscarCompra"),
+    path('mercaderias/', include('Mercaderias.urls'))
 ]
+
+urlpatterns+= static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)

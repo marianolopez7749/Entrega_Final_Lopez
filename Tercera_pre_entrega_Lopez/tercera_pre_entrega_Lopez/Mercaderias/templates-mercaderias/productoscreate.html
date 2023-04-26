@@ -6,8 +6,8 @@
     
     <div class="col-xl-6">
       <div class="text-black">
-          <h1 class="mb-15">GESTION DE PRODUCTOS</h1>
-          <h3> Alta de producto </h3>
+          <h1 class="mb-10">GESTION DE PRODUCTOS</h1>
+          <h1> Alta de producto </h1>
       </div>
     </div>
    
@@ -19,7 +19,7 @@
   <form action="{% url 'creaproductos' %}" method="POST">{% csrf_token %}
 
     {{form.as_table}}
-
+    
     <button type="submit"> Enviar </button>
 
   </form>

@@ -23,17 +23,39 @@ def inicio(self):
       return render(self, "mercaderias.html")
 
 def productos(self):
-    return render(self, "productos.html")
+
+    try:
+      avatar = Avatar.objects.get(user=self.user.id)
+      return render(self, 'productos.html', {'url': avatar.imagen.url})
+    except:
+      return render(self, "productos.html")
+    
 
 def proveedores(self):
-    return render(self, "proveedores.html")
 
+    try:
+      avatar = Avatar.objects.get(user=self.user.id)
+      return render(self, 'proveedores.html', {'url': avatar.imagen.url})
+    except:
+      return render(self, "proveedores.html")
+    
 def compras(self):
-    return render(self, "compras.html")
+
+    try:
+      avatar = Avatar.objects.get(user=self.user.id)
+      return render(self, 'compras.html', {'url': avatar.imagen.url})
+    except:
+      return render(self, "compras.html")
+    
 
 def stock(self):
-    return render(self, "stock.html")
 
+    try:
+      avatar = Avatar.objects.get(user=self.user.id)
+      return render(self, 'stock.html', {'url': avatar.imagen.url})
+    except:
+      return render(self, "stock.html")
+    
 
 
         
@@ -138,21 +160,26 @@ class ProveedorDelete(LoginRequiredMixin,DeleteView):
 
 class ProductosList(ListView):
    
-   model = Productos
-   template_name = 'productoslist.html'
-   context_object_name = 'productos'
+    model = Productos
+    template_name = 'productoslist.html'
+    context_object_name = 'productos'
+
+
 
 class ProductosDetail(DetailView):
    
    model = Productos
    template_name = 'productosdetail.html'
    context_object_name = 'productos'
+   
+   
+
 
 class ProductosCreate(LoginRequiredMixin,CreateView):
    
    model = Productos
    template_name = 'productoscreate.html'
-   fields = ['nombre', 'descripcion', 'codigo', 'Cuit']
+   fields = ('__all__')
    success_url = '/mercaderias/'
 
 
@@ -169,6 +196,56 @@ class ProductosDelete(LoginRequiredMixin,DeleteView):
    model = Productos
    template_name = 'productosdelete.html'
    success_url = '/mercaderias/'
+
+#class Agregarimagenproducto(LoginRequiredMixin,CreateView):
+   
+#   model = ImagenProducto
+#   template_name = 'cargaimagen.html'
+#   fields = ('__all__')
+#   success_url = '/mercaderias/'
+
+@staff_member_required(login_url='/mercaderias/')
+def altaProducto(request):
+    
+    if request.method == 'POST':
+      altaFormulario = AltaProductos(request.POST)
+      
+      if altaFormulario.is_valid():
+          data = altaFormulario.cleaned_data
+          producto = Productos(orden_compra=data['orden_compra'],
+                      factura_compra=data['factura_compra'], Cuit=data['Cuit'], 
+                      codigo=data['codigo'],cantidad=data['cantidad'],
+                      imagen=data['imagen'])
+          producto.save()
+
+          return render(request, "mercaderias.html")
+      else:
+          return render(request, "mercaderias.html", {"mensaje": "Formulario invalido"})
+    else:
+      altaFormulario = AltaProductos()
+      return render(request, "productoscreate.html", {"altaFormulario": altaFormulario})
+
+
+def agregar_imagen_producto(request):
+   
+      if request.method == 'POST':
+       formulario = ImagenProductoFormulario(request.POST, request.FILES)
+
+       if formulario.is_valid():
+        
+          data = formulario.cleaned_data
+          imagenprod = ImagenProducto(codigo=request.codigo, imagen=data["imagen"])
+          imagenprod.save()
+
+          return render(request, 'mercaderias.html')
+         
+       else:
+          return render(request, "mercaderias.html", {"mensaje": "Carga inválida"})
+  
+      else:
+        formulario = ImagenProductoFormulario()
+        return render(request, "cargaimagen.html", {"formulario": formulario})
+
 
 
 
@@ -205,21 +282,18 @@ class StockDelete(LoginRequiredMixin,DeleteView):
 def registro_usuario(request):
    
   if request.method == 'POST':
-    formulario = UserCreationForm(request.POST)
+     formulario = UserCreationForm(request.POST)
 
-    if formulario.is_valid():
-        
-      data = formulario.cleaned_data
-      username = data["username"]
-      formulario.save()
-      return render(request, 'mercaderias.html', {"mensaje": f'Usuario {username} creado!'})
-         
-    else:
-      return render(request, "mercaderias.html", {"mensaje": "Formulario invalido"})
-  
+     if formulario.is_valid():
+       data = formulario.cleaned_data
+       username = data["username"]
+       formulario.save()
+       return render(request, 'mercaderias.html', {"mensaje": f'Usuario {username} creado!'})
+     else:
+       return render(request, "mercaderias.html", {"mensaje": "Formulario invalido"})
   else:
-    formulario = UserCreationForm()
-    return render(request, "registro.html", {"formulario": formulario}) 
+     formulario = UserCreationForm()
+     return render(request, "registro.html", {"formulario": formulario}) 
 
 
 def loginView(request):
@@ -282,22 +356,22 @@ def editar_perfil(request):
 def agregar_avatar(request):
    
   if request.method == 'POST':
-    formulario = AvatarFormulario(request.POST, request.FILES)
+      formulario = AvatarFormulario(request.POST, request.FILES)
 
-    if formulario.is_valid():
-        
-      data = formulario.cleaned_data
-      avatar = Avatar(user=request.user, imagen=data["imagen"])
-      avatar.save()
+      if formulario.is_valid():
 
-      return render(request, 'mercaderias.html', {"mensaje": f'Avatar agregado!'})
+        data = formulario.cleaned_data
+        avatar = Avatar(user=request.user, imagen=data["imagen"])
+        avatar.save()
+
+        return render(request, 'mercaderias.html', {"mensaje": f'Avatar agregado!'})
          
-    else:
-      return render(request, "mercaderias.html", {"mensaje": "Formulario invalido"})
+      else:
+        return render(request, "mercaderias.html", {"mensaje": "Formulario invalido"})
   
   else:
-    formulario = AvatarFormulario()
-    return render(request, "agregarAvatar.html", {"formulario": formulario})
+      formulario = AvatarFormulario()
+      return render(request, "agregaravatar.html", {"formulario": formulario})
   
 
 

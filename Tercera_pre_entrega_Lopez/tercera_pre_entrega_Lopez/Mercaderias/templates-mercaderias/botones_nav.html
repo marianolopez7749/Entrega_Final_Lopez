@@ -11,12 +11,15 @@
         
         {% if user.is_authenticated %}    
           {% if url %}
-            <img height="40px" src="{{url}}" alt="avatar">
-          {% endif %}
-          <h5>Bienvenido {{user.username}}</h5>
-                   
-          <a class="btn btn-primary" href="{% url 'logout' %}">LOGOUT</a>
-          <a class="navbar-brand" href="{% url 'editarperfil' %}">Actualizar usuario</a>
+             <img height="80px" src="{{url}}" alt="avatar">
+             <a class="navbar-brand" href="{% url 'editarperfil' %}">
+             <h1>{{user.username}}</h1>
+          {% else %}       
+             <a class="navbar-brand" href="{% url 'editarperfil' %}">
+             <h1>{{user.username}}</h1>
+          {% endif %} 
+             <a class="btn btn-primary" href="{% url 'logout' %}">LOGOUT</a>
+             <a class="navbar-brand" href="{% url 'agregaravatar' %}">Avatar</a>  
         {% else %}
           <a class="btn btn-primary" href="{% url 'login' %}">LOGIN</a>
           <a class="btn btn-primary" href="{% url 'registro' %}">NUEVO USUARIO</a>

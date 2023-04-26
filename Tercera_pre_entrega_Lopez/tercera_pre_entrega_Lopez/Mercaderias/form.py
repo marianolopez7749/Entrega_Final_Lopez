@@ -1,7 +1,8 @@
 from django import forms
 from django.contrib.auth.forms import UserChangeForm
 from django.contrib.auth.models import User
-from .models import Avatar
+from .models import Avatar, ImagenProducto
+from django.db import models
 
 class AltaProveedor(forms.Form):
     razon_social= forms.CharField(max_length=40)
@@ -17,6 +18,7 @@ class AltaProductos(forms.Form):
     descripcion= forms.CharField(max_length=40)
     codigo= forms.IntegerField()
     Cuit= forms.IntegerField()
+    imagen = forms.ImageField()
 
     
 class AltaCompras(forms.Form):
@@ -56,3 +58,9 @@ class AvatarFormulario(forms.ModelForm):
    class Meta:
       model=Avatar
       fields=('imagen',)  
+
+
+class ImagenProductoFormulario(forms.ModelForm):
+   class Meta:
+      model=ImagenProducto
+      fields=('imagen',) 

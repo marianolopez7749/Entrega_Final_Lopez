@@ -19,11 +19,10 @@ class Productos(models.Model):
     descripcion=models.CharField(max_length=40)
     codigo=models.IntegerField()
     Cuit=models.IntegerField()
+    imagen = models.ImageField(upload_to='imagenproductos', null=True, blank=True)
     
-   
-
     def __str__(self):
-       return f'Nombre: {self.nombre} - Descripcion: {self.descripcion} - Código: {self.codigo} - Cuit: {self.Cuit}' 
+       return f'Nombre: {self.nombre} - Descripcion: {self.descripcion} - Código: {self.codigo} - Cuit: {self.Cuit} - imagen: {self.imagen}' 
 
 
 class Compras(models.Model):
@@ -49,3 +48,14 @@ class Avatar(models.Model):
 
   user = models.ForeignKey(User, on_delete=models.CASCADE)
   imagen = models.ImageField(upload_to='avatares', null=True, blank=True)
+
+  def __str__(self):
+      return  f'{self.user} - {self.imagen}'
+
+class ImagenProducto(models.Model):
+
+  codigo = models.ForeignKey(Productos, on_delete=models.CASCADE)
+  imagen = models.ImageField(upload_to='imagenproductos', null=True, blank=True)
+
+  def __str__(self):
+      return  f'{self.codigo} - {self.imagen}'

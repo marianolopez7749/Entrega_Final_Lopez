@@ -373,5 +373,11 @@ def agregar_avatar(request):
       formulario = AvatarFormulario()
       return render(request, "agregaravatar.html", {"formulario": formulario})
   
+def acerca(self):
 
+    try:
+      avatar = Avatar.objects.get(user=self.user.id)
+      return render(self, 'acerca.html', {'url': avatar.imagen.url})
+    except:
+      return render(self, "acerca.html")
 
